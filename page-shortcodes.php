@@ -67,6 +67,21 @@ function handle_page_shortcodes_shortcode__page_content($atts, $content = null) 
     return $content;
 }
 
+function handle_page_shortcodes_shortcode__page_meta($atts, $content = null) {
+    extract(shortcode_atts(array(
+        'id' => null,
+        'name' => null,
+        'meta' => null,
+    ), $atts));
+    $page = page_shortcodes_find_page(array('id' => $id, 'name' => $name), $content);
+    if ( $page ) {
+        $data = get_post_meta($page->ID,$meta);
+        if ( isset($data[0]) ) {
+            return '<div class="page-shortcodes-meta">' . $data[0] . '</div>';
+        }
+    }
+    return $content;
+}
 
 function handle_page_shortcodes_shortcode__page_list($atts, $content = null) {
     extract(shortcode_atts(array(
@@ -109,6 +124,7 @@ function handle_page_shortcodes_init() {
     add_shortcode('page_permalink', 'handle_page_shortcodes_shortcode__page_permalink');
     add_shortcode('page_title', 'handle_page_shortcodes_shortcode__page_title');
     add_shortcode('page_content', 'handle_page_shortcodes_shortcode__page_content');
+    add_shortcode('page_meta', 'handle_page_shortcodes_shortcode__page_meta');
     add_shortcode('page_list', 'handle_page_shortcodes_shortcode__page_list');
 }
 
