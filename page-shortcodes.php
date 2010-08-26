@@ -94,7 +94,7 @@ function handle_page_shortcodes_shortcode__page_list($atts, $content = null) {
         if ( $page ) $id = $page->ID;
     }
     if ( ! $id ) return $content;
-    $queryArgs = array('post_type' => 'page', 'post_parent' => $id, 'orderby' => 'title');
+    $queryArgs = array('post_type' => 'page', 'post_parent' => $id, 'orderby' => 'title', 'order' => 'ASC', );
     $theQuery = new WP_Query($queryArgs);
     $posts = $theQuery->get_posts();
     if ( count($posts) ) {
